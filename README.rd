@@ -31,32 +31,14 @@ Modules
 =================
 
 
-Filesystem
------------
-### Questions:
-#### Why am I including an implementation of the c++17 ISO filesystem in this library? 
-
-This is because I find having these ideas encapsulated very useful for file and data management. I also have gotten sick of keeping track of where to save files and data only to have misspelled a directory destroying my progress in an experiment. Having an implementation of a filesystem in c++ standard is useful to mitigate problems I may encounter due to my own typos. 
-
-This should be mostly congruent with the c++17 ISO being implemented in compilers in the future. I like how this works and eventually can be removed and replaced with the std version once it becomes wide-spread. To see the full details of the ISO you can go to https://isocpp.org/files/papers/P0218r1.html and other sites. 
-
-#### What is implemented?
-
-Due to time constraints I have not quite filled out the entire implementation.
-Currently I have what I need for it to be useful and will eventually fill out the rest of the implementation. Below is a list of features that are implemented and somewhat tested.
-
-
-- class path;
-- class directory_iterator;
-- class recursive_directory_iterator;
-- class file_status;
-- file/directory creation and removal
-
-
 Managers
------------
+____________
 
 There are many managers. A manager for saving files, reading files, a manager for keeping track of important values, a error manager to handle error calculations given a truth and prediction, and more. These are useful for many reasons and have been incredibly useful in cleaning up the main experimental code.
 
 Save Manager
-------------
+______________
+
+
+Reportee Manager
+________________
