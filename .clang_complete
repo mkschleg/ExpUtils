@@ -1,0 +1,5 @@
+-I./googletest/include/
+-I./inc
+-I./ExpUtils/inc
+-I/opt/local/include/SDL2
+-I/opt/local/include/libomp

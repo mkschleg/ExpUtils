@@ -22,4 +22,12 @@ namespace _misc{
     return ret;
   }
 }
+template<typename T>
+std::ostream& operator<<(std::ostream& os, const std::vector<T>& _vec){
+  for(const auto& d:_vec){
+    os<<d<<" ";
+  }
+  return os;
+}
+
 }
