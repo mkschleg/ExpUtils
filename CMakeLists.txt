@@ -13,9 +13,9 @@ option(build_tests "Build all of gtest's own tests." ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g")
 # include_directories("./inc/")
 
-include_directories("./ExpUtils/inc/")
+include_directories("./src/inc/")
 
-add_subdirectory(ExpUtils)
+add_subdirectory(src)
 
 
 if (build_tests)
