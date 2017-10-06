@@ -22,7 +22,7 @@ public:
 
   // virtual ~ReporteeBase() = default;
 
-  void store() override final{
+  void update() override final{
     storage.push_back(data);
     // std::cout<<data<<std::endl;
   }
@@ -128,11 +128,12 @@ TEST(ReporterManagerTest, multipleReportees){
   
   
   //Due to my lack of knowledge as of now you have to declare functionals before initializing with the templates....
+  std::function<void (ExpUtils::Reportee<std::pair<int,int>,int>*)> init = [](ExpUtils::Reportee<std::pair<int,int>,int>*) {return;};
   std::function<bool (ExpUtils::Reportee<std::pair<int,int>,int>*)> toStore = [](ExpUtils::Reportee<std::pair<int,int>,int>*) -> bool {return true;};
   std::function<void (ExpUtils::Reportee<std::pair<int,int>,int>*, const std::pair<int,int>&)> store = [](ExpUtils::Reportee<std::pair<int,int>,int>* reportee, const std::pair<int,int>& data) -> void{reportee->m_data.push_back(data.second);};
   std::function<void (ExpUtils::Reportee<std::pair<int,int>,int>*, const ExpUtils::Signal&)> signal = [](ExpUtils::Reportee<std::pair<int,int>,int>* reportee, const ExpUtils::Signal& s) -> void{};
   std::function<void (const ExpUtils::Reportee<std::pair<int,int>,int>*,std::ostream&)> print = [](const ExpUtils::Reportee<std::pair<int,int>,int>* reportee,std::ostream& os) -> void{ for(const auto& d : reportee->m_data) os<<d<<" ";};
-  rm.registerReportee<ExpUtils::Reportee<std::pair<int,int>,int>>("Reportee2", p, toStore, store, signal, print);
+  rm.registerReportee<ExpUtils::Reportee<std::pair<int,int>,int>>("Reportee2", p, init, toStore, store, signal, print);
 
   for(int j = 0; j < 10; j++){
     p.second++;

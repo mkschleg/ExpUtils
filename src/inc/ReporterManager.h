@@ -39,14 +39,15 @@ namespace ExpUtils{
   public:
 
     virtual ~ReporteeBase() = default;
-
-    virtual void store() = 0;
+    
+    // virtual void init() = 0;
+    virtual void update() = 0;
     virtual void signal(const Signal&) = 0;
     virtual std::ostream& print(std::ostream&) const = 0;
     virtual void clear() = 0;
 
   };
-  
+
   inline std::ostream& operator<<(std::ostream& os, const ReporteeBase& reportee){
     return reportee.print(os);
   }
@@ -58,24 +59,32 @@ namespace ExpUtils{
 
     Reportee(
       const DataType& dataRef,
+      std::function<void (Reportee<DataType, StorageType>*)> _init,
       std::function<bool (Reportee<DataType, StorageType>*)> _toStore,
       std::function<void (Reportee<DataType, StorageType>* reportee, const DataType& data)> _store,
       std::function<void (Reportee<DataType, StorageType>* reportee, const Signal& s)> _signal,
       std::function<void (const Reportee<DataType,StorageType>*,std::ostream&)> _print
-    ): m_dataRef(dataRef), m_toStore(_toStore), m_signal(_signal), m_store(_store), m_print(_print){}
+    ): m_dataRef(dataRef), m_init(_init),m_toStore(_toStore), m_signal(_signal), m_store(_store), m_print(_print){
+      m_init(this);
+    }
     
 
-    Reportee(Reportee&& reportee):m_dataRef(std::move(reportee.m_dataRef)){}
-    Reportee(const Reportee& reportee){}
+    Reportee(Reportee&& reportee):
+      m_steps(std::move(reportee.m_steps)), m_data(std::move(reportee.m_data)), m_dataRef(std::move(reportee.m_dataRef)),
+      m_init(std::move(reportee.m_init)),m_toStore(std::move(reportee.m_toStore)),m_signal(std::move(reportee.m_signal)),
+      m_store(std::move(reportee.m_store)),m_print(std::move(reportee.m_print)){}
+    Reportee(const Reportee& reportee):
+      m_steps(reportee.m_steps), m_data(reportee.m_data), m_dataRef(reportee.m_dataRef),
+      m_init(reportee.m_init),m_toStore(reportee.m_toStore),m_signal(reportee.m_signal),
+      m_store(reportee.m_store),m_print(reportee.m_print){}
     ~Reportee(){}
 
-    void store() final override{
+    void update() final override{
       if(m_toStore(this)){
         m_store(this,m_dataRef);
       }
     }
-    void signal(const Signal& _signal) final override{
-      m_signal(this, _signal);
+    void signal(const Signal& _signal) final override{m_signal(this, _signal);
     }
     std::ostream& print(std::ostream& os) const final override{
       m_print(this, os);
@@ -83,33 +92,30 @@ namespace ExpUtils{
     }
     void clear() final override{
       m_data.clear();
+      std::fill(m_steps.begin(), m_steps.end(), 0);
     }
+    
+    void init(){ m_init(this); }
 
-    void initializeSize(size_t size){ m_data.resize(size); }
-
-    // void set_print(std::function<void (const Reportee<DataType,StorageType>*,std::ostream&)> _func) { m_print = _func; }
-    // void set_toStore(std::function<bool (Reportee<DataType, StorageType>*)> _func) { m_toStore = _func; }
-    // void set_store(std::function<void (const Reportee<DataType,StorageType>* r, const DataType& data)> _func) { m_store = _func; }
-    // void set_signal(std::function<void (Reportee<DataType, StorageType>* reportee, const Signal& s)> _func) { m_signal = _func; }
-
-  // protected:
     std::vector<size_t> m_steps;
     std::vector<StorageType> m_data;
     const DataType& m_dataRef;
 
-     std::function<bool (Reportee<DataType, StorageType>*)> m_toStore = [](Reportee<DataType, StorageType>* reportee){ return true; };
+    std::function<void (Reportee<DataType, StorageType>*)> m_init = [](Reportee<DataType, StorageType>*){};
 
-     std::function<void (Reportee<DataType, StorageType>* reportee, const Signal& s)> m_signal = [](Reportee<DataType, StorageType>* reportee, const Signal& s){};
+    std::function<bool (Reportee<DataType, StorageType>*)> m_toStore = [](Reportee<DataType, StorageType>* reportee){ return true; };
 
-     std::function<void (Reportee<DataType,StorageType>* r, const DataType& data)> m_store = [](Reportee<DataType,StorageType>* r, const DataType& data){
-       r->m_data.push_back(data);
-     };
+    std::function<void (Reportee<DataType, StorageType>* reportee, const Signal& s)> m_signal = [](Reportee<DataType, StorageType>* reportee, const Signal& s){};
 
-     std::function<void (const Reportee<DataType,StorageType>*,std::ostream&)> m_print = [](const Reportee<DataType,StorageType>* r, std::ostream& os){
-       for(int i = 0; i < r->m_data.size(); i++){
-         os<<r->m_data[i]<<'\n';
-       }
-     };
+    std::function<void (Reportee<DataType,StorageType>* r, const DataType& data)> m_store = [](Reportee<DataType,StorageType>* r, const DataType& data){
+      r->m_data.push_back(data);
+    };
+
+    std::function<void (const Reportee<DataType,StorageType>*,std::ostream&)> m_print = [](const Reportee<DataType,StorageType>* r, std::ostream& os){
+      for(int i = 0; i < r->m_data.size(); i++){
+        os<<r->m_data[i]<<'\n';
+      }
+    };
   };
 
 
@@ -147,7 +153,7 @@ namespace ExpUtils{
 
 
     void update(){ 
-      for(auto& reportee: reporteeMap) reportee.second->store();
+      for(auto& reportee: reporteeMap) reportee.second->update();
     }
 
     void clear(){
