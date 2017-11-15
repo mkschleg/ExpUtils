@@ -102,7 +102,7 @@ namespace ExpUtils{
     const DataType& m_dataRef;
 
     std::function<void (Reportee<DataType, StorageType>*)> m_init = [](Reportee<DataType, StorageType>*){};
-
+    
     std::function<bool (Reportee<DataType, StorageType>*)> m_toStore = [](Reportee<DataType, StorageType>* reportee){ return true; };
 
     std::function<void (Reportee<DataType, StorageType>* reportee, const Signal& s)> m_signal = [](Reportee<DataType, StorageType>* reportee, const Signal& s){};
@@ -137,7 +137,7 @@ namespace ExpUtils{
     template <typename _Reportee>
     void registerReportee(std::string id, const _Reportee& reportee){
       static_assert(std::is_base_of<ReporteeBase, _Reportee>::value, "Registering a Reportee requires reportee to be derived from ExpUtils::ReporteeBase");
-      static_assert(std::is_copy_constructible<_Reportee>::value, "Reportee must be move constructable");
+      static_assert(std::is_copy_constructible<_Reportee>::value, "Reportee must be copy constructable");
       reporteeMap[id] = ExpUtils::Memory::make_unique<_Reportee>(reportee);
     }
     // 
@@ -152,7 +152,7 @@ namespace ExpUtils{
     }
 
 
-    void update(){ 
+    void update(){
       for(auto& reportee: reporteeMap) reportee.second->update();
     }
 
