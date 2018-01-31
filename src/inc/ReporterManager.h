@@ -84,8 +84,7 @@ namespace ExpUtils{
         m_store(this,m_dataRef);
       }
     }
-    void signal(const Signal& _signal) final override{m_signal(this, _signal);
-    }
+    void signal(const Signal& _signal) final override{ m_signal(this, _signal); }
     std::ostream& print(std::ostream& os) const final override{
       m_print(this, os);
       return os;
@@ -125,15 +124,19 @@ namespace ExpUtils{
     friend SaveManager& operator<<(SaveManager& sm, const ReporterManager& rm);
     friend std::ostream& operator<<(std::ostream& os, const ReporterManager& rm);
   public:
+    
 
     // Reportee Needs to resolve to a ReporteeBase.
     template <typename _Reportee>
     void registerReportee(std::string id, _Reportee&& reportee){
+      //Reportee must resolve to ReporteeBase
       static_assert(std::is_base_of<ReporteeBase, _Reportee>::value, "Registering a Reportee requires reportee to be derived from ExpUtils::ReporteeBase");
+      //Reportee must be move constructable!
       static_assert(std::is_move_constructible<_Reportee>::value, "Reportee must be move constructable");
+      //Assign reportee to map of reportees from map[id] = reportee;
       reporteeMap[id] = ExpUtils::Memory::make_unique<_Reportee>(std::move(reportee));
     }
-    // 
+
     template <typename _Reportee>
     void registerReportee(std::string id, const _Reportee& reportee){
       static_assert(std::is_base_of<ReporteeBase, _Reportee>::value, "Registering a Reportee requires reportee to be derived from ExpUtils::ReporteeBase");
@@ -190,6 +193,11 @@ namespace ExpUtils{
       sm<<(_reportee.first + rm.fileType), *_reportee.second;
     }
     return sm;
+  }
+  //Specialization of ReporterManager::registerReportee for already cast pointers.
+  template<>
+  inline void ReporterManager::registerReportee<ReporteeBase*>(std::string id, ReporteeBase* && reportee){
+    reporteeMap[id] = std::unique_ptr<ReporteeBase>(std::move(reportee));
   }
 
 }

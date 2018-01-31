@@ -36,7 +36,7 @@ namespace ExpUtils{
         if(source.length()>0) results->push_back(source);
         return results;
       }
-    }
+    } // namespace _util
 
     std::pair<std::string,std::string> getDirectoryFilePair(const std::string& source){
       int found;
@@ -67,7 +67,7 @@ namespace ExpUtils{
     bool directoryExists(const std::string& _dir){
       return isDirectory(_dir);
     }
-    
+
     
 
     bool createDirectory(const std::string& _dir){
@@ -113,7 +113,7 @@ namespace ExpUtils{
       return false;
     }
     
-    bool removeDirectory(std::string dir) {
+    bool removeDirectory(const std::string& dir) {
       // std::rem
       int rv = std::remove(dir.c_str());
       if (rv){
@@ -124,6 +124,16 @@ namespace ExpUtils{
       return true;
     }
     
+    bool createFile(const std::string& file){
+      return false;
+    }
+
+
+    bool fileExists(const std::string& file){
+      struct stat buf;
+      return (stat(file.c_str(), &buf) == 0);
+    }
+
     bool removeFile(std::string file){
       int rv = std::remove(file.c_str());
       if (rv){
@@ -142,7 +152,7 @@ namespace ExpUtils{
       return false;
     }
 
-    std::fstream openFile(std::string file, std::ios_base::openmode mode){
+    std::fstream openFile(const std::string& file, std::ios_base::openmode mode){
       std::pair<std::string, std::string> dirpair = getDirectoryFilePair(file);
       if(dirpair.first != ""){
         createDirectory(dirpair.first);
@@ -156,7 +166,7 @@ namespace ExpUtils{
       return fs;
     }
 
-    void openFile(std::fstream& fs, std::string file, std::ios_base::openmode mode){
+    void openFile(std::fstream& fs, const std::string& file, std::ios_base::openmode mode){
       fs.close();
       std::pair<std::string, std::string> dirpair = getDirectoryFilePair(file);
       if(dirpair.first != ""){

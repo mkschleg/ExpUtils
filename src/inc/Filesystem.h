@@ -24,22 +24,22 @@ namespace ExpUtils{
     namespace _util{
       std::vector<std::string>* stringExplode(const std::string& source, const std::string& delimiter);
     } //namespace _util
-
+    
     std::pair<std::string,std::string> getDirectoryFilePair(const std::string& source);
     
     bool isDirectory(const std::string& dir);
-
-
     bool directoryExists(const std::string& dir);
-
     bool createDirectory(const std::string& dir);
+    bool removeDirectory(const std::string& dir);
 
+    bool fileExists(const std::string& file);
     bool removeFile(const std::string& file);
+    bool createFile(const std::string& file);
 
     // bool forceRemoveDirectory();
 
-    std::fstream openFile(const std::string& file, std::ios_base::openmode mode);
-    void openFile(std::fstream& fs, const std::string& file, std::ios_base::openmode mode);
+    std::fstream openFile(const std::string& file, std::ios_base::openmode mode = std::ios_base::in | std::ios_base::out);
+    void openFile(std::fstream& fs, const std::string& file, std::ios_base::openmode mode = std::ios_base::in | std::ios_base::out);
   }
 }
 

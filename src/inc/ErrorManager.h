@@ -162,5 +162,6 @@ namespace ExpUtils{
     for(auto& p: em.errorsMap){
       sm<<(p.first+em.fileType),*p.second;
     }
+    return sm;
   }
 }
