@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "ReporterManager.h"
+#include "ReporterManager.hh"
 
 #include <sstream>
 
@@ -118,14 +118,14 @@ TEST(ReporterManagerTest, reportee){
 }
 
 TEST(ReporterManagerTest, multipleReportees){
-  
+
   ExpUtils::ReporterManager rm;
   std::pair<int,int> p{0,0};
 
-  
+
 
   rm.registerReportee<ExpUtils::Reportee<int>>("Reportee", p.first);
-  
+
   
   //Due to my lack of knowledge as of now you have to declare functionals before initializing with the templates....
   std::function<void (ExpUtils::Reportee<std::pair<int,int>,int>*)> init = [](ExpUtils::Reportee<std::pair<int,int>,int>*) {return;};
@@ -144,5 +144,49 @@ TEST(ReporterManagerTest, multipleReportees){
   ss<<rm;
   std::string str = ss.str();
   EXPECT_EQ(str, "Reportee\n0\n1\n3\n6\n10\n15\n21\n28\n36\n45\nReportee2\n1 2 3 4 5 6 7 8 9 10 ");
+
+}
+
+ExpUtils::ReporteeBase* func(std::pair<int,int>& p){
+  return new ExpUtils::Reportee<std::pair<int,int>,int>{
+    p,
+    [](ExpUtils::Reportee<std::pair<int,int>,int>*) {return;},
+    [](ExpUtils::Reportee<std::pair<int,int>,int>*) -> bool {return true;},
+    [](ExpUtils::Reportee<std::pair<int,int>,int>* reportee, const std::pair<int,int>& data) -> void{reportee->m_data.push_back(data.second);},
+    [](ExpUtils::Reportee<std::pair<int,int>,int>* reportee, const ExpUtils::Signal& s) -> void{},
+    [](const ExpUtils::Reportee<std::pair<int,int>,int>* reportee,std::ostream& os) -> void{ for(const auto& d : reportee->m_data) os<<d<<" ";}
+  };
+}
+
+
+
+TEST(ReporterManagerTest, reporteeFromFunction){
+
+  ExpUtils::ReporterManager rm;
+  std::pair<int,int> p{0,0};
+
+
+
+  // rm.registerReportee<ExpUtils::Reportee<int>>("Reportee", p.first);
+  // 
+  // 
+  // //Due to my lack of knowledge as of now you have to declare functionals before initializing with the templates....
+  // std::function<void (ExpUtils::Reportee<std::pair<int,int>,int>*)> init = [](ExpUtils::Reportee<std::pair<int,int>,int>*) {return;};
+  // std::function<bool (ExpUtils::Reportee<std::pair<int,int>,int>*)> toStore = [](ExpUtils::Reportee<std::pair<int,int>,int>*) -> bool {return true;};
+  // std::function<void (ExpUtils::Reportee<std::pair<int,int>,int>*, const std::pair<int,int>&)> store = [](ExpUtils::Reportee<std::pair<int,int>,int>* reportee, const std::pair<int,int>& data) -> void{reportee->m_data.push_back(data.second);};
+  // std::function<void (ExpUtils::Reportee<std::pair<int,int>,int>*, const ExpUtils::Signal&)> signal = [](ExpUtils::Reportee<std::pair<int,int>,int>* reportee, const ExpUtils::Signal& s) -> void{};
+  // std::function<void (const ExpUtils::Reportee<std::pair<int,int>,int>*,std::ostream&)> print = [](const ExpUtils::Reportee<std::pair<int,int>,int>* reportee,std::ostream& os) -> void{ for(const auto& d : reportee->m_data) os<<d<<" ";};
+
+  rm.registerReportee("Reportee", func(p));
+
+  for(int j = 0; j < 10; j++){
+    p.second++;
+    p.first = p.first + j;
+    rm.update();
+  }
+  std::stringstream ss;
+  ss<<rm;
+  std::string str = ss.str();
+  EXPECT_EQ(str, "Reportee\n1 2 3 4 5 6 7 8 9 10 ");
 
 }

@@ -1,5 +1,5 @@
 
-#include "Filesystem.h"
+#include "Filesystem.hh"
 
 // #include "Filesystem/path.cpp"
 // #include "Filesystem/directory.cpp"
@@ -152,6 +152,14 @@ namespace ExpUtils{
       return false;
     }
 
+    std::string pathJoin(const std::string& lpath, const std::string& rpath){
+      // static constexpr value_type preferred_separator = '/';
+      std::string path = lpath;
+      if(path.back() != '/') path += '/';
+      path = path + rpath;
+      return path;
+    }
+
     std::fstream openFile(const std::string& file, std::ios_base::openmode mode){
       std::pair<std::string, std::string> dirpair = getDirectoryFilePair(file);
       if(dirpair.first != ""){
@@ -160,7 +168,7 @@ namespace ExpUtils{
       std::fstream fs(file, mode);
       if(fs.is_open() == false){
         std::cerr << "File not created: " << file << "\n";
-        std::cerr << "Error: " << strerror(errno) << std::flush;
+        std::cerr << "Error: " << strerror(errno) << "\n" << std::flush;
       }
       // fs<<"openfile"<<std::endl;
       return fs;
@@ -176,7 +184,7 @@ namespace ExpUtils{
       fs.open(file, mode);
       if(fs.is_open() == false){
         std::cerr << "File not created: " << file << "\n";
-        std::cerr << "Error: " << strerror(errno) << std::flush;
+        std::cerr << "Error: " << strerror(errno) << "\n" << std::flush;
       }
     }
   }

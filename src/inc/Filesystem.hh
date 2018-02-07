@@ -24,9 +24,9 @@ namespace ExpUtils{
     namespace _util{
       std::vector<std::string>* stringExplode(const std::string& source, const std::string& delimiter);
     } //namespace _util
-    
+
     std::pair<std::string,std::string> getDirectoryFilePair(const std::string& source);
-    
+
     bool isDirectory(const std::string& dir);
     bool directoryExists(const std::string& dir);
     bool createDirectory(const std::string& dir);
@@ -35,6 +35,8 @@ namespace ExpUtils{
     bool fileExists(const std::string& file);
     bool removeFile(const std::string& file);
     bool createFile(const std::string& file);
+
+    std::string pathJoin(const std::string& lpath, const std::string& rpath);
 
     // bool forceRemoveDirectory();
 

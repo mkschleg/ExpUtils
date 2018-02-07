@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
-#include "Experiment.h"
-#include "Memory.h"
+#include "Experiment.hh"
+#include "Memory.hh"
 // #include <memory>
 //
 // class Experiment:public ExpUtils::Experiment<Experiment>{

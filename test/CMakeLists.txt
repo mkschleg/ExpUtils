@@ -1,12 +1,12 @@
 file(GLOB SRCS *.cpp)
 
-add_executable(testfilesystem ${SRCS})
+add_executable(testexputils ${SRCS})
 
-target_link_libraries(testfilesystem
+target_link_libraries(testexputils
     gtest_main
     EXP_UTILS
 )
 
-add_test(NAME filesystem_test COMMAND testfilesystem)
+add_test(NAME exputils_test COMMAND testexputils)
 
 # install(TARGETS testfilesystem DESTINATION bin)

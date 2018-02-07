@@ -15,6 +15,9 @@ namespace ExpUtils{
   //! \brief This is used when a tupple parser isn't enough when parsing command line arguments. This is developed based on the Python3 ArgParser utility
   // I'm pretty sure we might need a lot of constexpr here to be able to implement this. This should be c++14+ only feature. I'm goint to try to have 2
   //   versions one for pre-c++14 and one for post-c++14...
+  
+  //Lets instead do just in time conversion to the proper type:
+  //  Store map<String, std::vector<String>> = {argName => parsed}
 
 class ArgParser{
 public:
@@ -53,7 +56,7 @@ public:
   }
 
   struct ArgumentFormat{
-    
+
     enum Action{
       store,
       store_true,

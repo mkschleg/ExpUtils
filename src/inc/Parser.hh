@@ -1,8 +1,9 @@
 #pragma once
 
-#include "misc.h"
+#include "misc.hh"
 
 #include <vector>
+#include <array>
 #include <string>
 #include <sstream>
 #include <exception>
@@ -19,6 +20,29 @@ namespace ExpUtils{
     iss >> dat;
     // std::cout<<iss.fail()<<" "<<iss.bad()<<" "<<iss.tellg()<<std::endl;
     return !iss.fail();
+  }
+
+  template<typename T>
+  bool convert(const std::string& s, std::vector<T>& datVec, std::string delim = " "){
+    std::vector<std::string> strVec = _misc::stringExplode(s, delim);
+    datVec.resize(strVec.size());
+    bool ret = true;
+    for(int i = 0; i < datVec.size(); i++){
+      ret = convert(strVec[i],datVec[i]);
+    }
+    return ret;
+  }
+
+  template<typename T, std::size_t N>
+  bool convert(const std::string& s, std::array<T,N>& datVec, std::string delim = " "){
+    std::vector<std::string> strVec = _misc::stringExplode(s, delim);
+    // datVec.resize(strVec.size());
+    if(strVec.size() != N) return false;
+    bool ret = true;
+    for(int i = 0; i < datVec.size(); i++){
+      ret = convert(strVec[i],datVec[i]);
+    }
+    return ret;
   }
 
 
@@ -115,7 +139,18 @@ namespace ExpUtils{
   std::tuple<Types...> ParseString(const std::string& str, std::string delim = " "){
     std::tuple<Types...> ret;
     if(!ParseString(str, ret, delim)){
-      throw std::runtime_error("ParaseString: unable to Parse Based on Types.");
+      throw std::runtime_error("ParseString: unable to Parse Based on Types.");
+    }
+  }
+  
+  template <typename T>
+  std::vector<T> ParseToVector(const std::string& str, std::string delim = " "){
+    // std::vector<T> ret;
+    std::vector<std::string> _slist = _misc::stringExplode(str, delim);
+    std::vector<T> ret(_slist.size());
+    // ret.resize(size_type __sz)
+    for (int i = 0; i < _slist.size(); i++){
+      convert(_slist[i], ret[i]);
     }
   }
 

@@ -1,8 +1,8 @@
 #pragma once
 
 
-#include "SaveManager.h"
-#include "Memory.h"
+#include "SaveManager.hh"
+#include "Memory.hh"
 
 #include <functional>
 #include <iostream>

@@ -1,7 +1,9 @@
 
 
 #include "gtest/gtest.h"
-#include "Parser.h"
+#include "Parser.hh"
+
+// #include
 
 TEST(ParserTest, vectorTest){
   double d1, d2;
@@ -34,7 +36,7 @@ TEST(ParserTest, commandLineTestTest){
   EXPECT_EQ(i1, 293);
   EXPECT_EQ(i2, 550);
 
-
+  
 }
 
 TEST(ParserTest, tupleTest){
@@ -65,4 +67,48 @@ TEST(ParserTest, exceptionTest){
   } catch(...){
     exceptionFired = true;
   }
+}
+
+TEST(ConvertTest, convertToVector){
+
+  std::string str = "1 2 3 4 5 6";
+  std::vector<int> v(6);
+  EXPECT_TRUE(ExpUtils::convert(str, v));
+
+  for( int i = 1; i < 7; i++ ){
+    EXPECT_EQ(v[i-1],i);
+  }
+}
+
+
+TEST(ConvertTest, convertToArray){
+
+  std::string str = "1 2 3 4 5 6";
+  std::array<int,6> v;
+  EXPECT_TRUE(ExpUtils::convert(str, v));
+
+  for( int i = 1; i < 7; i++ ){
+    EXPECT_EQ(v[i-1],i);
+  }
+  
+  str = "1 2 3 4";
+  EXPECT_FALSE(ExpUtils::convert(str, v));
+  
+  for( int i = 1; i < 7; i++ ){
+    EXPECT_EQ(v[i-1],i);
+  }
+
+}
+
+TEST(ConvertTest, convertToBool){
+
+  std::string str = "1";
+  bool c = false;
+  EXPECT_TRUE(ExpUtils::convert(str,c));
+  EXPECT_TRUE(c);
+  
+  str = "0";
+  EXPECT_TRUE(ExpUtils::convert(str,c));
+  EXPECT_FALSE(c);
+
 }

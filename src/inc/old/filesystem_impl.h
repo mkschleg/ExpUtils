@@ -12,7 +12,7 @@ namespace Filesystem{
     typedef char value_type;
     typedef std::basic_string<value_type>  string_type;
     static constexpr value_type preferred_separator = '/';
-    
+
     friend bool operator==(const path& _lhs, const path& _rhs);
     
   public:

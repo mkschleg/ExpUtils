@@ -1,7 +1,7 @@
 
 
 #include "gtest/gtest.h"
-#include "Memory.h"
+#include "Memory.hh"
 // #include <memory>
 #include <iostream>
 
@@ -28,6 +28,14 @@ TEST(Sanity, UniquePtrMoveSemantics){
   
   std::unique_ptr<A> up_A3 = ExpUtils::Memory::make_unique<A>(A(9));
   EXPECT_EQ(up_A3->i, 9);
+
+
+}
+
+TEST(Sanity, Vector){
+  
+  std::vector<int> v{1,2,3,4,5,6,7,8,9};
+  // v.erase(v.end());
 
 
 }

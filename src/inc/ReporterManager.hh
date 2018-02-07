@@ -1,8 +1,8 @@
 #pragma once
 
-#include "SaveManager.h"
+#include "SaveManager.hh"
 // #include "miscutils.h"
-#include "Memory.h"
+#include "Memory.hh"
 
 
 #include <iostream>
