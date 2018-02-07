@@ -7,10 +7,10 @@ cmake_minimum_required(VERSION 3.8)
 
 # add_subdirectory(googletest)
 
-option(build_tests "Build all of gtest's own tests." ON)
+option(build_tests "Build all tests." OFF)
 
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -g")
 # include_directories("./inc/")
 
 include_directories("./src/inc/")
