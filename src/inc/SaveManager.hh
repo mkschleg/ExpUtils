@@ -42,7 +42,7 @@ namespace ExpUtils{
         std::cerr<<"SaveManager: Warning filename empty"<<std::endl;
         file = std::to_string(backupFileIdentifier++) + ".dat";
       }
-      std::fstream fs = Filesystem::openFile(directory + file, std::fstream::out);
+      std::fstream fs = Filesystem::openFile(Filesystem::pathJoin(directory, file), std::fstream::out);
 
       if(fs.is_open()){
         fs<<data<<"\n"<<std::flush;
