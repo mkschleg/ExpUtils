@@ -27,15 +27,11 @@ TEST (ArgParserTest, versionTest_exception) {
 
   argParse.addArgument("version", "v", ExpUtils::ArgParser::ArgType::version , true);
 
-  // ExpUtils::ArgParser::Help help;
   try{
     auto args = argParse.parse(std::vector<std::string>{"versionTest","-v"});
   } catch(const std::runtime_error &e){
-    // std::cout<<e.what()<<std::endl;
     EXPECT_EQ(std::string(e.what()), "versionTest: v0.1");
   }
-  // EXPECT_FALSE(help.isSuccessful());
-  // EXPECT_EQ(help.report(), "versionTest: v0.1");
 
 }
 

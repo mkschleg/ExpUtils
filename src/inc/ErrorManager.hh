@@ -133,8 +133,8 @@ namespace ExpUtils{
     void registerErrorFunction(std::string id, ErrorBase<TruthType>* error){
       errorsMap[id] = std::unique_ptr<ErrorBase<TruthType>>(error);
     }
-    
-    void updateErrorFunctions(const TruthType& truth){
+
+    void update(const TruthType& truth){
       for(auto& errPair: errorsMap){
         errPair.second->operator()(truth);
       }
