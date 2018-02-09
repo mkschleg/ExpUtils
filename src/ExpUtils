@@ -6,3 +6,4 @@
 #include "inc/Random.hh"
 #include "inc/ReporterManager.hh"
 #include "inc/SaveManager.hh"
+#include "inc/ArgParser.hh"
