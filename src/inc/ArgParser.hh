@@ -64,6 +64,18 @@ public:
   // void addArgument(const std::string& name, const std::string&  shortname, size_t size){addArgument(name, shortname, ArgType::store, size);}
   void addArgument(const std::string& name, const std::string&  shortname, ArgType atype){ addArgument(name, shortname, atype, true); }
   // void addArgument(const std::string& name, const std::string&  shortname, const std::string& atype){ addArgument(name, shortname, atype, true); }
+  
+  
+  Args parse(size_t argc, char* argv[]){
+    //Make into a std::vector
+    return parse(std::vector<std::string>(argv, argv+argc));
+  }
+
+  Args parse(size_t argc, char* argv[], Help& help){
+    //Make into a std::vector and pass to subsequent function.
+    return parse(std::vector<std::string>(argv, argv+argc), help);
+  }
+
 
   Args parse(size_t argc, const char* argv[]){
     //Make into a std::vector
