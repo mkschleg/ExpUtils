@@ -119,7 +119,7 @@ public:
 
     template <typename T>
     T retrieve(std::string name){
-      retrieve(name, T{});
+      return retrieve(name, T{});
     }
 
     template <typename T>
