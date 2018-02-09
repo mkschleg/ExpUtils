@@ -119,7 +119,12 @@ public:
 
     template <typename T>
     T retrieve(std::string name){
-      if (contains(name) == false) return T{};
+      retrieve(name, T{});
+    }
+
+    template <typename T>
+    T retrieve(std::string name, T def){
+      if (contains(name) == false) return def;
       T dat;
       if(convert(nameToStringMap[name], dat) == false){
         throw std::runtime_error("Something went wrong with parsing (probably not the right type) " + name);
