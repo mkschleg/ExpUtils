@@ -10,6 +10,7 @@
 #include <sys/stat.h>
 #include <dirent.h>
 #include <errno.h>
+#include <cstring>
 
 #include <iostream>
 #include <fstream>
@@ -20,9 +21,9 @@
 //FIXME: Depricated
 namespace ExpUtils{
   namespace Filesystem{
-    #ifndef __clang
-    char* perror(int errnum) {return strerror(errnum);}
-    #endif
+    // #ifndef __clang
+    // char* perror(int errnum) {return strerror(errnum);}
+    // #endif
     namespace _util{
       std::vector<std::string>* stringExplode(const std::string& _source, const std::string& _delimiter){
         int found;
