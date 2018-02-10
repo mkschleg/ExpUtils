@@ -130,9 +130,14 @@ namespace ExpUtils{
       errorsMap[id] = Memory::make_unique<ErrorFunction<TruthType, PredType, ErrType>>(measuredRef, calcError, p_print, experimentSteps, trackSteps);
     }
 
-    void registerErrorFunction(std::string id, ErrorBase<TruthType>* &error){
+    // void registerErrorFunction(std::string id, ErrorBase<TruthType>* &error){
+    //   errorsMap[id] = std::unique_ptr<ErrorBase<TruthType>>(error);
+    //   error = nullptr;
+    // }
+
+    void registerErrorFunction(std::string id, ErrorBase<TruthType>* error){
       errorsMap[id] = std::unique_ptr<ErrorBase<TruthType>>(error);
-      error = nullptr;
+      // error = nullptr;
     }
 
     void update(const TruthType& truth){
