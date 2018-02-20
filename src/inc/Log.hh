@@ -10,17 +10,17 @@
 
 namespace ExpUtils{namespace Log{
 
-class Stream: public std::ostringstream{
-public:
-    static Stream& getInstance(){
-        static Stream instance;
-        return instance;
-    }
-    Stream(Stream&) = delete;
-    void operator=(Stream&) = delete;
-private:
-    Stream() = default;
-};
+// class Stream: public std::ostringstream{
+// public:
+//     static Stream& getInstance(){
+//         static Stream instance;
+//         return instance;
+//     }
+//     Stream(Stream&) = delete;
+//     void operator=(Stream&) = delete;
+// private:
+//     Stream() = default;
+// };
 
 // inline void DEBUG(const std::string&);
 
