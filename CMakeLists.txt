@@ -1,16 +1,12 @@
 
 cmake_minimum_required(VERSION 3.8)
-
-
-
 # project(filesystem)
 
 # add_subdirectory(googletest)
 
 option(build_tests "Build all tests." OFF)
 
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -g")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g")
 # include_directories("./inc/")
 
 include_directories("./src/inc/")
@@ -49,7 +45,7 @@ if (build_tests)
   if (CMAKE_VERSION VERSION_LESS 2.8.11)
     include_directories("${gtest_SOURCE_DIR}/include")
   endif()
-  
+
   include_directories(("./googletest/include"))
   # This must be set in the root directory for the tests to be run by
   # 'make test' or ctest.
