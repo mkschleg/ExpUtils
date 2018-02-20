@@ -1,5 +1,4 @@
-#pragma once
-
+ #pragma once
 
 
 #ifndef DEBUGLEVEL
@@ -7,12 +6,25 @@
 #endif
 
 #include <iostream>
+#include <sstream>
 
-namespace ExpUtils{
+namespace ExpUtils{namespace Log{
 
-  namespace Log{
+class Stream: public std::ostringstream{
+public:
+    static Stream& getInstance(){
+        static Stream instance;
+        return instance;
+    }
+    Stream(Stream&) = delete;
+    void operator=(Stream&) = delete;
+private:
+    Stream() = default;
+};
 
-    constexpr void DEBUG(const std::string&);
+// inline void DEBUG(const std::string&);
 
 
-}}// namespace ExpUtils::Log
+
+
+}} // namespace ExpUtils::Log

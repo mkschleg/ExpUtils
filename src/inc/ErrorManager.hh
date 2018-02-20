@@ -55,7 +55,7 @@ namespace ExpUtils{
     void operator()(const TruthType& truth) override{
       m_error[m_currStep++] = m_calcError(this, m_measuredReference, truth);
     }
-    
+
     void clear() override{
       m_clear(this);
     }

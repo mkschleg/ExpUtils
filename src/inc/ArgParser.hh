@@ -25,7 +25,10 @@ namespace ExpUtils{
 //TODO: Generate Format String.
 //NOTE: Can't do multiWord strings.....
 
-
+///
+/// @brief This is used when a tupple parser isn't enough when parsing command line arguments. This is developed based on the Python3 ArgParser utility
+/// 
+///
 class ArgParser{
 private:
   struct Arg;
@@ -49,6 +52,7 @@ public:
   //These are the first several arguments and are all required. These occur at the begining of the arguments. Ordered Arguments can also only be single values.
   void addOrderedArgument(const std::string& name){
     orderedArguments.push_back(Arg(name, "", ArgType::store, false));
+
   }
 
   //True add argument function (all other functions will call this one.
@@ -273,7 +277,7 @@ inline ArgParser::Args ArgParser::parse(const std::vector<std::string>& argv, He
 
     j++;
   }
-
+  
   //Look through the other arguments.
   for ( int i = j; i < argv.size(); i++ ) {
     //i should always be within argv.
@@ -293,7 +297,7 @@ inline ArgParser::Args ArgParser::parse(const std::vector<std::string>& argv, He
             // requiredNames.era
             requiredNamescp.erase(itr);
           }
-
+          
           auto arg = nameToArgMap.at(cur);
           //Check type
           std::string parsedString = "";
@@ -345,7 +349,7 @@ inline ArgParser::Args ArgParser::parse(const std::vector<std::string>& argv, He
           }
           ret.nameToStringMap[cur] = parsedString;
           //That should be it.
-
+          
         } else {
           //What if it doesnt? Ignore? What about looking through short names?
         }
