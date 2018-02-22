@@ -4,8 +4,8 @@
 
 # add_subdirectory(src)
 
-include_directories(inc/)
+# include_directories(inc/)
 
-file(GLOB EXP_UTILS_SRC src/*.cpp)
+# file(GLOB EXP_UTILS_SRC src/*.cpp)
 
-add_library(EXP_UTILS ${EXP_UTILS_SRC})
+# add_library(EXP_UTILS ${EXP_UTILS_SRC})

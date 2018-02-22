@@ -6,15 +6,16 @@ cmake_minimum_required(VERSION 3.8)
 
 option(build_tests "Build all tests." OFF)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g")
+
 # include_directories("./inc/")
 
-include_directories("./src/inc/")
+# include_directories("./src")
 
-add_subdirectory(src)
+# add_subdirectory(src)
 
 
 if (build_tests)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g")
   # Download and unpack googletest at configure time
   configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
   execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .

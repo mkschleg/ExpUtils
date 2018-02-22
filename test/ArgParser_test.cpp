@@ -1,5 +1,5 @@
 
-#include "ArgParser.hh"
+#include "ExpUtils"
 #include "gtest/gtest.h"
 #include <iostream>
 #include <string>
@@ -142,7 +142,7 @@ TEST(ArgParserTest, storeTest_Exceptions) {
     exception = true;
     EXPECT_EQ(
         std::string(e.what()),
-        "Something went wrong with parsing (probably not the right type) test");
+        "Something went wrong with parsing (probably not the right type): test");
   }
   EXPECT_TRUE(exception);
 }

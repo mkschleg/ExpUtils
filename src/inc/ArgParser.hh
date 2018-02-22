@@ -1,6 +1,5 @@
 
-#ifndef _EXPUTILS_ARGPARSER_H
-#define _EXPUTILS_ARGPARSER_H
+#pragma once
 
 #include "Any.hh"
 #include "Parser.hh"
@@ -492,4 +491,4 @@ inline ArgParser::Params ArgParser::parse(const std::vector<std::string> &argv,
 
 } // namespace ExpUtils
 
-#endif //_EXPUTILS_ARGPARSER_H
+// #endif //_EXPUTILS_ARGPARSER_H
