@@ -12,20 +12,22 @@ All bugs and comments are welcome, but as I am a current PhD student I will not 
 Why not boost?
 ---------------
 
-There are a few reasons. First boost would only be useful for a few things in my projects, and the compile time and resource need to store the library is to much for the moment. In other words, boost is like killing a cockroach with an atom bomb: it is too big a solution for my problem and there are consequences for such a solution that could require more work than necessary. Also this library contains ideas and implementations for useful tools that are not available in Boost that are specific to computer science experimentation.
+There are a few reasons. First boost would only be useful for a few things in my projects, and the compile time and resource need to store the library is to much for the moment. In other words, boost is like killing a cockroach with an atom bomb: it is too big a solution for my problem and there are consequences for such a solution that could require more work than necessary. Also this library contains ideas anD implementations for useful tools that are not available in Boost that are specific to computer science experimentation.
 
 Modules
 =================
 
 
 Managers
-____________
+----------
 
 There are many managers. A manager for saving files, reading files, a manager for keeping track of important values, a error manager to handle error calculations given a truth and prediction, and more. These are useful for many reasons and have been incredibly useful in cleaning up the main experimental code.
 
 Save Manager
-______________
+--------------
 
 
 Reportee Manager
-________________
+---------------
+
+

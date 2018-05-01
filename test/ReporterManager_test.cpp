@@ -66,11 +66,11 @@ TEST(ReporterManagerTest, TemplateConstructor){
   std::stringstream ss;
   
   ss<<rm;
-
+  
   std::string str = ss.str();
-
+  
   EXPECT_EQ(str, "TestReportee\n0 1 3 6 10 15 21 28 36 45 30 ");
-
+  
 }
 
 TEST(ReporterManagerTest, PointerConstructor){

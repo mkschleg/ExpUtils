@@ -8,7 +8,7 @@ namespace ExpUtils{
 namespace _misc{
   template<typename chartype>
   std::vector<std::basic_string<chartype>> stringExplode(const std::basic_string<chartype>& _source, std::basic_string<chartype> _delimiter){
-    int found;
+    size_t found;
     std::string source = _source;
     std::vector<std::basic_string<chartype>> ret;
     found=source.find_first_of(_delimiter);

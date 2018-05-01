@@ -1,4 +1,3 @@
-
 #include "ExpUtils"
 #include "gtest/gtest.h"
 #include <iostream>
@@ -22,9 +21,9 @@ TEST(ArgParserTest, versionTest_exception) {
 
   ExpUtils::ArgParser argParse{"versionTest", "v0.1"};
   // ExpUtils::ArgParser argParse("ProgName", "v0.1");
-
+  
   argParse.addArgument("version", "v", ExpUtils::ArgParser::ArgType::version, true);
-
+  
   try {
     auto args = argParse.parse(std::vector<std::string>{"versionTest", "-v"});
   } catch (const std::runtime_error &e) {

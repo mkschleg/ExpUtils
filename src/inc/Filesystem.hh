@@ -26,7 +26,7 @@ namespace ExpUtils{
     // #endif
     namespace _util{
       inline std::vector<std::string>* stringExplode(const std::string& _source, const std::string& _delimiter){
-        int found;
+        size_t found = 0;
         std::string source = _source;
         std::vector<std::string>* results = new std::vector<std::string>;
         found=source.find_first_of(_delimiter);
@@ -43,7 +43,7 @@ namespace ExpUtils{
     } // namespace _util
 
     inline std::pair<std::string,std::string> getDirectoryFilePair(const std::string& source){
-      int found;
+      size_t found;
       std::pair<std::string, std::string> dirfile{"",""};
       found=source.find_last_of('/');
       if(found > 0){
@@ -129,6 +129,7 @@ namespace ExpUtils{
     }
     
     inline bool createFile(const std::string& file){
+      std::cout<<"File not created: "<<file<<std::endl;
       return false;
     }
 
@@ -150,9 +151,6 @@ namespace ExpUtils{
     
     inline bool forceRemoveDirectory() {
       //Traverse through directory tree and delete all files and directories.
-
-
-
       return false;
     }
 

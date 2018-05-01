@@ -14,7 +14,7 @@
 namespace ExpUtils{
 
   class _SaveManagerTempObject;
-  
+
   class SaveManager{
     friend class _SaveManagerTempObject;
     friend _SaveManagerTempObject operator<<(SaveManager& saveManager, std::string);
@@ -34,7 +34,7 @@ namespace ExpUtils{
     int backupFileIdentifier = 0;
     // std::string directory = "";
     std::string directory;
-    
+
     template<typename T>
     void save(const std::string& _file, const T& data){
       std::string file = _file;
@@ -61,7 +61,7 @@ namespace ExpUtils{
       }
     }
   };
-  
+
   class _SaveManagerTempObject{
     friend _SaveManagerTempObject operator<<(SaveManager& saveManager, std::string filename);
     SaveManager& m_saveManager;
@@ -78,7 +78,7 @@ namespace ExpUtils{
     }
   };
 
-  
+
   inline _SaveManagerTempObject operator<<(SaveManager& saveManager, std::string filename){
     // std::cout<<"Here"<<std::endl;
     return _SaveManagerTempObject(saveManager, filename);

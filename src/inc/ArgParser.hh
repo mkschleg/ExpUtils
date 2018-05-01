@@ -33,7 +33,7 @@ public:
   enum ArgType { store, store_true, store_false, append, version };
 
   ArgParser(std::string _name, std::string _version)
-      : versionStr(_version), name(_name) {}
+    : name(_name), versionStr(_version) {}
   // ArgParser(std::string _version = "0.0"): versionStr(_version) {}
   ArgParser(std::string _version) : versionStr(_version) {
     std::cerr << "Depricated: Please use ArgParser(name,version)";
@@ -189,8 +189,9 @@ public:
 
     std::string generateFormatString(const ArgParser &argparser) {
       std::ostringstream ss;
-
-      return "Format String Coming soon....";
+      ss <<  "Format String Coming soon: "
+         << argparser.name << " " << argparser.versionStr;
+      return ss.str();
     }
 
   private:
@@ -298,7 +299,7 @@ inline ArgParser::Params ArgParser::parse(const std::vector<std::string> &argv,
   std::string token;
   std::string app_name = argv[0];
   int j = 1;
-  for (int i = 1; i < orderedArguments.size() + 1; i++) {
+  for (size_t i = 1; i < orderedArguments.size() + 1; i++) {
     // Are we still within our limits?
     if (i == argv.size()) {
       help.error(*this);
@@ -319,7 +320,7 @@ inline ArgParser::Params ArgParser::parse(const std::vector<std::string> &argv,
   }
 
   // Look through the other arguments.
-  for (int i = j; i < argv.size(); i++) {
+  for (size_t i = j; i < argv.size(); i++) {
     // i should always be within argv.
     std::string cur = argv[i];
 

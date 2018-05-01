@@ -1,6 +1,7 @@
 #pragma once
 
 
+
 #include "SaveManager.hh"
 #include "Memory.hh"
 
@@ -36,8 +37,9 @@ namespace ExpUtils{
       std::function<ErrType (const ErrorFunction<TruthType, PredType, ErrType>*,const PredType& pred, const TruthType& truth)> calcError,
       int experimentSteps,
       int trackSteps
-    ): m_measuredReference(measuredRef), m_calcError(calcError),m_experimentSteps(experimentSteps), m_currStep(0)
+                  ): m_measuredReference(measuredRef), m_calcError(calcError),m_experimentSteps(experimentSteps), m_currStep(0), m_trackSteps(trackSteps)
     {
+      //trackSteps = trackSteps;
       m_error.resize(experimentSteps);
     }
     
@@ -47,7 +49,7 @@ namespace ExpUtils{
       std::function<void (const ErrorFunction<TruthType, PredType, ErrType>*, std::ostream&)> p_print, 
       int experimentSteps, 
       int trackSteps
-    ): m_measuredReference(measuredRef), m_calcError(calcError), m_print(p_print),m_experimentSteps(experimentSteps), m_currStep(0)
+                  ): m_measuredReference(measuredRef), m_calcError(calcError), m_print(p_print),m_experimentSteps(experimentSteps), m_currStep(0), m_trackSteps(trackSteps)
     {
       m_error.resize(experimentSteps);
     }
@@ -70,11 +72,15 @@ namespace ExpUtils{
     std::vector<ErrType> m_error;
     const PredType& m_measuredReference;
     // const T& truth;
-    
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
     std::function<ErrType (const ErrorFunction<TruthType, PredType, ErrType>*, const PredType& pred, const TruthType& truth)> m_calcError
     = [](const ErrorFunction<TruthType, PredType, ErrType>* ef, const PredType& pred, const TruthType& truth){
       std::cerr<<"m_CalcError Is not assigned. Please assign."<<std::endl;
     };
+#pragma clang diagnostic pop
+
     std::function<void (const ErrorFunction<TruthType, PredType, ErrType>*, std::ostream&)> m_print = [](const ErrorFunction<TruthType, PredType, ErrType>* ef, std::ostream& os){
       for(const auto& v: ef->m_error){
         os<<v<<"\n";
@@ -87,9 +93,9 @@ namespace ExpUtils{
       ef->m_error.resize(ef->m_experimentSteps);
     };
     
-    int m_experimentSteps;
-    int m_currStep = 0;
-    
+    size_t m_experimentSteps;
+    size_t m_currStep = 0;
+    size_t m_trackSteps = 0;
   };
 
   template<typename T>

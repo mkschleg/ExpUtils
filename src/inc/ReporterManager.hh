@@ -101,17 +101,19 @@ namespace ExpUtils{
     const DataType& m_dataRef;
 
     std::function<void (Reportee<DataType, StorageType>*)> m_init = [](Reportee<DataType, StorageType>*){};
-    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
     std::function<bool (Reportee<DataType, StorageType>*)> m_toStore = [](Reportee<DataType, StorageType>* reportee){ return true; };
 
     std::function<void (Reportee<DataType, StorageType>* reportee, const Signal& s)> m_signal = [](Reportee<DataType, StorageType>* reportee, const Signal& s){};
-
+#pragma clang diagnostic pop
+    
     std::function<void (Reportee<DataType,StorageType>* r, const DataType& data)> m_store = [](Reportee<DataType,StorageType>* r, const DataType& data){
       r->m_data.push_back(data);
     };
 
     std::function<void (const Reportee<DataType,StorageType>*,std::ostream&)> m_print = [](const Reportee<DataType,StorageType>* r, std::ostream& os){
-      for(int i = 0; i < r->m_data.size(); i++){
+      for(size_t i = 0; i < r->m_data.size(); i++){
         os<<r->m_data[i]<<'\n';
       }
     };
