@@ -43,10 +43,11 @@ namespace ExpUtils{
     } // namespace _util
 
     inline std::pair<std::string,std::string> getDirectoryFilePair(const std::string& source){
-      size_t found;
+      size_t found = 0;
       std::pair<std::string, std::string> dirfile{"",""};
-      found=source.find_last_of('/');
-      if(found > 0){
+      found=source.find_last_of("/");
+      //std::cout<<found<<std::endl;
+      if(found > 0 && found != std::string::npos){
         dirfile.first = source.substr(0,found);
         dirfile.second = source.substr(found+1,source.size());
       } else {
@@ -77,6 +78,7 @@ namespace ExpUtils{
     inline bool createDirectory(const std::string& _dir){
       //Clean given string for directory creation.
       std::string dir = _dir;
+      std::cout<<_dir<<std::endl;
       if(dir.back() == '/'){
         // std::cout<<dir<<std::endl;
         dir = dir.substr(0, dir.size()-1);
@@ -84,6 +86,7 @@ namespace ExpUtils{
       }
       //Get path and directory name.
       std::pair<std::string, std::string> dirpair = getDirectoryFilePair(dir);
+      //std::cout<<dir<<" "<<dirpair.first<<" "<<dirpair.second<<std::endl;
       //If the path is relative and simple
       if(dirpair.first == ""){
         if(directoryExists(dir)){

@@ -52,7 +52,7 @@ TEST(ArgParserTest, orderedTest_toFew) {
     auto args = argParse.parse(std::vector<std::string>{"versionTest", "1"});
   } catch (std::runtime_error &e) {
     // std::cerr<<e.what()<<std::endl;
-    EXPECT_EQ(std::string(e.what()), "Format String Coming soon....");
+    EXPECT_EQ(std::string(e.what()), "Format String Coming soon:  v0.1");
     exception = true;
   }
   // EXPECT_EQ(args.retrieve<int>("test"), 1);
@@ -73,7 +73,7 @@ TEST(ArgParserTest, orderedTest_otherEarly) {
         std::vector<std::string>{"versionTest", "1", "--test3", "1"});
   } catch (std::runtime_error &e) {
     // std::cerr<<e.what()<<std::endl;
-    EXPECT_EQ(std::string(e.what()), "Format String Coming soon....");
+    EXPECT_EQ(std::string(e.what()), "Format String Coming soon:  v0.1");
     exception = true;
   }
   // EXPECT_EQ(args.retrieve<int>("test"), 1);
