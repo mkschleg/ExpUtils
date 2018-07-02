@@ -10,7 +10,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
-#include <errno.h>
+#include <cerrno>
+#include <cstring>
 
 #include <fstream>
 #include <vector>
@@ -78,7 +79,7 @@ namespace ExpUtils{
     inline bool createDirectory(const std::string& _dir){
       //Clean given string for directory creation.
       std::string dir = _dir;
-      std::cout<<_dir<<std::endl;
+      //std::cout<<_dir<<std::endl;
       if(dir.back() == '/'){
         // std::cout<<dir<<std::endl;
         dir = dir.substr(0, dir.size()-1);
@@ -124,7 +125,7 @@ namespace ExpUtils{
       // std::rem
       int rv = std::remove(dir.c_str());
       if (rv){
-        strerror(errno);
+        std::strerror(errno);
         return false;
       }
 
@@ -145,7 +146,7 @@ namespace ExpUtils{
     inline bool removeFile(std::string file){
       int rv = std::remove(file.c_str());
       if (rv){
-        strerror(errno);
+        std::strerror(errno);
         return false;
       }
 
@@ -173,7 +174,7 @@ namespace ExpUtils{
       std::fstream fs(file, mode);
       if(fs.is_open() == false){
         std::cerr << "File not created: " << file << "\n";
-        std::cerr << "Error: " << strerror(errno) << "\n" << std::flush;
+        std::cerr << "Error: " << std::strerror(errno) << "\n" << std::flush;
       }
       // fs<<"openfile"<<std::endl;
       return fs;
@@ -189,7 +190,7 @@ namespace ExpUtils{
       fs.open(file, mode);
       if(fs.is_open() == false){
         std::cerr << "File not created: " << file << "\n";
-        std::cerr << "Error: " << strerror(errno) << "\n" << std::flush;
+        std::cerr << "Error: " << std::strerror(errno) << "\n" << std::flush;
       }
     }
   }
